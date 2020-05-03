@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body{
+            background-color: #a78b96;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        body h1{
+            color:#f4f4f4;
+            margin-left:46%;
+        }
+        .card {
+            background-color: #f4f4f4;
+            border-radius: 10px;
+            margin-left: 34%;
+            margin-bottom: 1% ;
+            padding: 2%;
+            width: 30%;
+            align-items: center;
+            display:inline-block;
+        }
+        #insert input{
+            padding: 2%;
+            width: 96%;
+            height: 60px;
+            border: 1px;
+            border-radius: 5px;
+            
+        }
+        #button{
+            margin-top: 3%;
+            text-align: center;
+        }
+        #button input{
+            background-color: #692440;
+            color: #f4f4f4;
+            width: 100%;
+            height: 30px;
+            border: 1px;
+            border-radius: 5px;
+        }
+        #buttonedit{
+            margin-top: 3%;
+            text-align: center;
+        }
+        #buttonedit input{
+            background-color: #692440;
+            color: #f4f4f4;
+            width: 100%;
+            height: 30px;
+            border: 1px;
+            border-radius: 5px;
+        }
+        .table{
+            background-color: white;
+            border-radius: 5px;
+            width: 100%;
+        }
+        .table tr,td{
+            border-bottom: 1px solid #692440; 
+            padding-top: 3%;
+            padding-bottom: 3%;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Create Your Own Plan!</h1>
+    <div class="card" id=posting> 
+        <form name="form" action="">
+            <div id="insert">
+                <input type="text" id="plan" placeholder="Insert your plan!" autofocus>
+            </div>
+            <div id="button">
+                <input type="button" onclick="add(),reset()" class="btn" value="Plan It"></input >
+            </div>
+        </form>
+    </div>
+    <div class="card" id="edit" style="display: none;" name="form">
+        <form action="">
+            <div id="insert">
+                <input type="text" id="txt_edit">
+            </div>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="table">
+            <table id="tabel">
+                <tr>
+                    <td style="width: 10%;border-bottom: 2px solid #6983aa;"><input type="checkbox" id="check1" onclick="checkall(this)"></td>
+                    <td style="width: 90%;border-bottom: 2px solid #6983aa;">No</td>
+                    <td style="width: 90%;border-bottom: 2px solid #6983aa;">Plan</td>
+                 </tr>
+            </table>
+        </div>
+        <div id="button">
+            <input type="button" onclick="deleterow()" class="btn" value="Remove Plan">
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        i=0;
+        var idx=0;
+        function reset(){
+            document.getElementsByName("plan").value="";
+        }
+        function checkall(source) {
+            var checkboxes = document.getElementsByName('check');
+            for(var j=0;j<i;j++) {
+                checkboxes[j].checked = source.checked;
+            }
+        }
+        
+        function deleterow() {
+			document.getElementById("check1").checked = false;
+			var checkboxes = document.getElementsByName('check');		
+			for(var j=0;j<i;j++) {
+				var x = checkboxes[j].checked;
+				if(checkboxes[j].checked)
+				{
+					document.getElementById("tabel").deleteRow(j+1);
+					i--;j--;
+					for(var l=1;l<=i;l++) {
+                        var row = document.getElementById("tabel").rows;
+                        var cell = row[l].cells;
+                        cell[1].innerHTML =1;
+					}
+				}
+			}
+		}
+
+        function add(){
+            if(document.getElementById("plan").value!=""){
+                i++;
+                var tabel=document.getElementById("tabel");
+                var row=tabel.insertRow(i);
+                var checkbox = document.createElement("INPUT");
+                checkbox.setAttribute("type","checkbox");
+                checkbox.name = "check";
+                var bt_edit = document.createElement("button");
+				var nama = document.getElementById("plan").value;
+				var cell0 = row.insertCell(0);
+				var cell1 = row.insertCell(1);
+				var cell2 = row.insertCell(2);
+                cell0.append(checkbox);
+                cell1.append(i);
+                cell2.append(nama);
+            }
+            else{
+                alert("You don't have any plan");
+            }
+        }
+    </script>
+</body>
+</html>
